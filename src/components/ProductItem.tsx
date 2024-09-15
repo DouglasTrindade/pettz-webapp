@@ -8,16 +8,21 @@ interface ProductItemProps {
 
 export const ProductItem = ({ imageUrl, title, price }: ProductItemProps) => {
   return (
-    <Card className="w-[350px] h-[350px]">
+    <Card className="w-[300px] h-full">
       <img
-        className="rounded-t-lg w-full object-cover h-[150px]"
+        className="rounded-t-lg w-full object-cover max-h-[200px]"
         src={imageUrl}
         alt={title}
       />
-      <CardContent className="p-4">
-        <div className="flex flex-col">
+      <CardContent className="p-3">
+        <div className="flex flex-col h-100">
           <span className="font-bold">{title}</span>
-          <span className="text-sm text-gray-400">{price}</span>
+          <span className="text-sm text-gray-600 font-semibold">
+            {Intl.NumberFormat("pt-br", {
+              style: "currency",
+              currency: "BRL",
+            }).format(price)}
+          </span>
         </div>
       </CardContent>
     </Card>
