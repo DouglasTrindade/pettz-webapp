@@ -3,9 +3,12 @@ import _ from "lodash";
 import { Carousel } from "@/components/Carousel";
 import { ProductItem } from "@/components/ProductItem";
 import { Banner } from "@/components/Banner";
+import { PostCard } from "../blog/components/PostCard";
 import Link from "next/link";
+import { Footer } from "@/components/Footer";
 
 const PRODUCTS = 6;
+const POSTCARDS = 3;
 
 const Home = () => {
   return (
@@ -37,6 +40,24 @@ const Home = () => {
       </div>
       <div>
         <Banner />
+      </div>
+      <div>
+        <div className="text-center text-2xl font-bold py-8">
+          <span>News & Blog</span>
+        </div>
+        <div className="flex flex-cols-3 justify-around">
+          {_.map(_.range(POSTCARDS), (index) => (
+            <PostCard
+              key={index}
+              title="Urna cras et mauris congue nunc nisi nec tempus cursus"
+              badgeName="News"
+              date="24 May,2024"
+            />
+          ))}
+        </div>
+      </div>
+      <div className="mt-20">
+        <Footer />
       </div>
     </div>
   );
