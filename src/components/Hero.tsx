@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 
 export const Hero = () => {
   return (
-    <div className="container grid grid-cols-1 md:grid-cols-2 gap-4 relative h-[500px]">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative h-[500px]">
       <div className="relative">
         <div className="hidden md:block">
           <Image

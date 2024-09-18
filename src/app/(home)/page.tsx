@@ -8,19 +8,21 @@ import Link from "next/link";
 import { Footer } from "@/components/Footer";
 
 const PRODUCTS = 6;
-const POSTCARDS = 3;
+const POSTCARDS = 4;
 
 const Home = () => {
   return (
-    <div className="container h-screen py-8">
-      <div className="text-2xl font-bold">Navegue por categoria</div>
+    <div className="h-screen py-8">
+      <div className="text-2xl font-bold text-gray-600">
+        Navegue por categoria
+      </div>
       <div className="mt-8">
         <Carousel />
       </div>
-      <div className="text-center text-2xl font-bold py-8">
+      <div className="text-center text-2xl text-gray-600 font-bold py-8">
         Produtos mais vendidos
       </div>
-      <div className="grid grid-cols-3 gap-y-6 w-full">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         {_.map(_.range(PRODUCTS), (index) => (
           <ProductItem
             key={index}
@@ -42,10 +44,10 @@ const Home = () => {
         <Banner />
       </div>
       <div>
-        <div className="text-center text-2xl font-bold py-8">
-          <span>News & Blog</span>
+        <div className="text-center py-8">
+          <span className="text-gray-600 text-2xl font-bold">News & Blog</span>
         </div>
-        <div className="flex flex-cols-3 justify-around">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
           {_.map(_.range(POSTCARDS), (index) => (
             <PostCard
               key={index}

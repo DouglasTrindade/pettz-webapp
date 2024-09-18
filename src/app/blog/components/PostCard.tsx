@@ -9,7 +9,7 @@ interface PostCardProps {
 
 export const PostCard = ({ badgeName, title, date }: PostCardProps) => {
   return (
-    <Card className="relative w-[300px] h-full">
+    <Card className="relative h-full">
       <img
         className="rounded-t-lg w-full object-cover max-h-[200px]"
         src="/category.jpg"

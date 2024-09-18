@@ -15,8 +15,8 @@ export const Carousel = () => {
     { id: 3, image: "/category.jpg", title: "Roupas" },
     { id: 4, image: "/category.jpg", title: "Bolsas" },
     { id: 5, image: "/category.jpg", title: "Calçados" },
-    { id: 6, image: "/category.jpg", title: "" },
-    { id: 7, image: "/category.jpg", title: "" },
+    { id: 6, image: "/category.jpg", title: "Gravatas" },
+    { id: 7, image: "/category.jpg", title: "Brinquedos" },
   ];
 
   return (
@@ -31,33 +31,12 @@ export const Carousel = () => {
         }}
         loop={true}
         breakpoints={{
-          1: {
-            slidesPerView: 1,
-          },
-          320: {
-            slidesPerView: 1.5,
-          },
-          450: {
-            slidesPerView: 2,
-          },
-          640: {
-            slidesPerView: 2.5,
-            navigation: {
-              enabled: true,
-            },
-          },
-          1024: {
-            slidesPerView: 3,
-            navigation: {
-              enabled: true,
-            },
-          },
-          1140: {
-            slidesPerView: 4,
-            navigation: {
-              enabled: true,
-            },
-          },
+          1: { slidesPerView: 1 },
+          320: { slidesPerView: 1.5 },
+          450: { slidesPerView: 2 },
+          640: { slidesPerView: 2.5 },
+          1024: { slidesPerView: 3 },
+          1140: { slidesPerView: 4 },
         }}
       >
         {slides.map((slide) => (
@@ -79,26 +58,18 @@ export const Carousel = () => {
         ))}
       </Swiper>
 
-      <div className="navigation-buttons">
-        <button className="swiper-button-prev-custom">
-          <ArrowLeft />
-        </button>
-        <button className="swiper-button-next-custom">
-          <ArrowRight />
-        </button>
+      <div className="swiper-button-prev-custom">
+        <ArrowLeft />
+      </div>
+      <div className="swiper-button-next-custom">
+        <ArrowRight />
       </div>
 
       <style jsx>{`
-        .navigation-buttons {
-          position: absolute;
-          top: -20%;
-          right: 10px;
-          display: flex;
-          transform: translateY(-50%);
-          z-index: 10;
-        }
         .swiper-button-prev-custom,
         .swiper-button-next-custom {
+          position: absolute;
+          top: 0px;
           background-color: #333;
           color: #fff;
           width: 40px;
@@ -106,10 +77,17 @@ export const Carousel = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-left: 5px;
           border-radius: 50%;
           cursor: pointer;
-          border: none;
+          z-index: 10;
+        }
+
+        .swiper-button-prev-custom {
+          left: 10px;
+        }
+
+        .swiper-button-next-custom {
+          right: 10px;
         }
       `}</style>
     </div>
