@@ -1,5 +1,4 @@
 import _ from "lodash";
-
 import { Carousel } from "@/components/Carousel";
 import { ProductItem } from "@/components/ProductItem";
 import { Banner } from "@/components/Banner";
