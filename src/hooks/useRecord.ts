@@ -87,7 +87,7 @@ export const useRecord = (props: UseRecordProps): UseRecordReturn => {
   const { isLoading, isError, isSuccess, data, refetch, ...rest } = useQuery({
     queryKey: [path],
     enabled: readyToFetch,
-    ...options,
+    ..._.omit(options, ["queryKey"]),
   }) as UseQueryResult<UseRecordReturn>;
 
   const record = data?.record;
