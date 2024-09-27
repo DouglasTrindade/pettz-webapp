@@ -1,3 +1,5 @@
+"use client";
+
 import _ from "lodash";
 import { Carousel } from "@/components/Carousel";
 import { ProductItem } from "@/components/ProductItem";
@@ -5,11 +7,36 @@ import { Banner } from "@/components/Banner";
 import { PostCard } from "../blog/components/PostCard";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
+import { api } from "@/services/api";
+import { useEffect, useState } from "react";
 
-const PRODUCTS = 6;
 const POSTCARDS = 4;
 
+interface ProductProps {
+  imgUrls: string[];
+  id: number;
+  name: string;
+  price: number;
+}
+
+interface ApiResponse {
+  content: ProductProps[];
+}
+
 const Home = () => {
+  const [products, setProducts] = useState<ApiResponse>({ content: [] });
+
+  useEffect(() => {
+    api
+      .get("/products")
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div className="h-screen py-8">
       <div className="text-2xl font-bold text-gray-600">
@@ -22,12 +49,12 @@ const Home = () => {
         Produtos mais vendidos
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-        {_.map(_.range(PRODUCTS), (index) => (
+        {products.content.map((product, index) => (
           <ProductItem
             key={index}
-            title="Ração Premium Dog"
-            price={200}
-            imageUrl="/category.jpg"
+            title={product.name}
+            price={product.price}
+            imgUrls={product.imgUrls}
           />
         ))}
       </div>
