@@ -39,7 +39,9 @@ export const Header = () => {
         </nav>
 
         <div className="flex gap-x-6">
-          <User />
+          <Link href="/cadastro">
+            <User />
+          </Link>
           <Heart />
           <ShoppingCart />
         </div>

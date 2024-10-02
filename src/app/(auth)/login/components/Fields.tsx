@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { registerSchema, type RegisterSchema } from "./Schema";
+import { loginSchema, type LoginSchema } from "./Schema";
 import {
   Form,
   FormControl,
@@ -14,42 +14,28 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { api } from "@/services/api";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 
-export const RegisterFields = () => {
+export const LoginFields = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
-  const form = useForm<RegisterSchema>({
-    resolver: zodResolver(registerSchema),
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (data: RegisterSchema) => {
+  const onSubmit = async (data: LoginSchema) => {
     setIsSubmitting(true);
     console.log(data);
 
     try {
-      await api
-        .post("/auth/register", {
-          email: data.email,
-          password: data.password,
-        })
-        .then((res) => {
-          if (res.status == 201) {
-            setTimeout(() => {
-              toast.success("Seu cadastro foi realizado com sucesso.");
-            });
-          }
-        });
-      router.push("/login");
-    } catch (error) {
-      setTimeout(() => {
-        toast.error("Não foi possível realizar o cadastro. Tente novamente.");
+      await api.post("/auth/login", {
+        email: data.email,
+        password: data.password,
       });
+    } catch (error) {
+      console.error("Erro ao fazer o login:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -95,42 +81,22 @@ export const RegisterFields = () => {
                     {...field}
                   />
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="confirm_password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-primary font-semibold">
-                  Confirme sua senha
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    className="w-full border-neutral-300 rounded-6 text-base leading-5"
-                    placeholder="Digite sua senha"
-                    type="password"
-                    {...field}
-                  />
-                </FormControl>
                 <span className="font-bold text-[10px] text-gray-500 uppercase">
-                  Você já tem uma conta?{" "}
+                  Não tem uma conta?{" "}
                   <Link
-                    href="/login"
+                    href="/cadastro"
                     className="text-primary hover:text-purple-700"
                   >
-                    Fazer login
+                    Cadastre-se
                   </Link>
                 </span>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <Button className="w-full" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Cadastrando..." : "Cadastrar"}
+            {isSubmitting ? "Entrando..." : "Entrar"}
           </Button>
         </form>
       </Form>
