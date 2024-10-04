@@ -12,11 +12,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { api } from "@/services/api";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export const LoginFields = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -27,13 +29,19 @@ export const LoginFields = () => {
 
   const onSubmit = async (data: LoginSchema) => {
     setIsSubmitting(true);
-    console.log(data);
 
     try {
-      await api.post("/auth/login", {
+      const result = await signIn("credentials", {
+        redirect: false,
         email: data.email,
         password: data.password,
       });
+
+      if (result?.error) {
+        console.error("Erro ao fazer login:", result.error);
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       console.error("Erro ao fazer o login:", error);
     } finally {
