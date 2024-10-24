@@ -17,7 +17,9 @@ api.interceptors.request.use(async (config) => {
 
     if (session?.user.token)
       config.headers.Authorization = `Bearer ${session.user.token}`;
-  } catch (error) {}
+  } catch (error) {
+    console.error("Erro ao adicionar o token à requisição:", error);
+  }
 
   return config;
 });
@@ -26,13 +28,18 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     try {
+      const statusCode = _.get(error, "response.status");
+      const apiStatusCode = _.get(error, "response.data.status_code");
       if (
-        (401 == _.get(error, "response.status") ||
-          401 == _.get(error, "response.data.status_code")) &&
+        (statusCode === 401 || apiStatusCode === 401) &&
         window !== undefined
-      )
-        return signOut();
-    } catch (error) {}
+      ) {
+        console.warn("Token expirado ou inválido. Realizando sign out...");
+        await signOut();
+      }
+    } catch (error) {
+      console.error("Erro no interceptor de resposta:", error);
+    }
 
     return Promise.reject(error);
   }
