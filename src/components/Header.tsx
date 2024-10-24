@@ -1,13 +1,29 @@
+"use client";
+
+import type { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { User, Heart, ShoppingCart, Menu } from "lucide-react";
+import {
+  User,
+  Heart,
+  ShoppingCart,
+  Menu,
+  ArrowDown,
+  LogOut,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
-export const Header = () => {
+export const Header = ({ session }: { session: Session | null }) => {
+  console.log(session);
+
   const navLinks = [
     { name: "inicio", path: "/" },
     { name: "produtos", path: "/produtos" },
@@ -38,12 +54,41 @@ export const Header = () => {
           </ul>
         </nav>
 
-        <div className="flex gap-x-6">
-          <Link href="/login">
-            <User />
-          </Link>
+        <div className="flex items-center gap-x-6">
           <Heart />
           <ShoppingCart />
+
+          {status === "authenticated" ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className="flex items-center p-0">
+                  <Button variant="outline" asChild>
+                    <Link href="/login">
+                      <User />
+                      <ArrowDown size={15} className="ms-1" />
+                    </Link>
+                  </Button>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Meus Dados</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Meus pedidos</DropdownMenuItem>
+                <DropdownMenuItem className="text-danger cursor-pointer">
+                  <button onClick={() => signOut({ callbackUrl: "/" })}>
+                    <div className="flex items-center gap-2">
+                      <LogOut size={15} />
+                      Sair
+                    </div>
+                  </button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Link href="/login">
+              <User />
+            </Link>
+          )}
         </div>
 
         <div className="block md:hidden">

@@ -38,7 +38,7 @@ export const LoginFields = () => {
       });
 
       if (result?.error) {
-        console.error("Erro ao fazer login:", result.error);
+        console.error("Erro ao fazer login:", result);
       } else {
         router.push("/");
       }

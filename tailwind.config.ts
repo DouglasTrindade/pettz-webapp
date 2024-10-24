@@ -88,6 +88,21 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        success: {
+          light: "#D1FAE5",
+          DEFAULT: "#10B981",
+          dark: "#065F46",
+        },
+        warning: {
+          light: "#FEF3C7",
+          DEFAULT: "#F59E0B",
+          dark: "#B45309",
+        },
+        danger: {
+          light: "#FEE2E2",
+          DEFAULT: "#EF4444",
+          dark: "#991B1B",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
