@@ -1,7 +1,6 @@
 "use client";
 
-import type { Session } from "next-auth";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import {
   User,
@@ -21,8 +20,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 
-export const Header = ({ session }: { session: Session | null }) => {
-  console.log(session);
+export const Header = () => {
+  const { status } = useSession();
 
   const navLinks = [
     { name: "inicio", path: "/" },
