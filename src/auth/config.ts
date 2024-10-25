@@ -16,45 +16,48 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const password = credentials.password as string | undefined;
 
         if (!email || !password) {
-          throw new Error("Por favor, forneça tanto o email quanto a senha.");
+          throw new Error("Email ou senha não autenticados");
         }
 
         try {
-          const response = await api.post("/auth/login", { email, password });
+          const response = await api.post("/auth/signin", {
+            email,
+            password,
+          });
 
-          if (!response.data || !response.data.token) {
-            console.error("Resposta inesperada da API:", response.data);
-            throw new Error("Falha na autenticação.");
-          }
-
-          console.log("Usuário autenticado:", response.data);
-
-          return {
-            email: response.data.email,
+          const user = {
             id: response.data.id,
+            fullName: response.data.fullName,
+            email: response.data.email,
             token: response.data.token,
           };
+          return user;
         } catch (error) {
+          console.error("Erro ao autenticar:", error);
           throw new Error("Falha na autenticação. Verifique suas credenciais.");
         }
       },
     }),
   ],
+  debug: true,
   pages: {
-    signIn: "/login",
+    signIn: "/signin",
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.email = user.email;
-        token.token = user.token;
+        token.fullName = user.fullName;
+        token.accessToken = user.token;
       }
       return token;
     },
     async session({ session, token }) {
-      session.user.id = token.id as string;
-      session.user.token = token.token as string | undefined;
+      if (session) {
+        session.user.id = token.id as string;
+        session.user.fullName = token.fullName as string;
+        session.user.token = token.accessToken as string | undefined;
+      }
 
       return session;
     },

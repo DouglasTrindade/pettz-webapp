@@ -21,7 +21,8 @@ import {
 import { Button } from "@/components/ui/button";
 
 export const Header = () => {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
+  console.log(session);
 
   const navLinks = [
     { name: "inicio", path: "/" },

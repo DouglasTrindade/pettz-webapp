@@ -25,13 +25,14 @@ export const LoginFields = () => {
     },
   });
 
-  const onSubmit = async (credentials: LoginSchema) => {
+  const onSubmit = async (data: LoginSchema) => {
     setIsSubmitting(true);
 
     try {
       const result = await signIn("credentials", {
         callbackUrl: "/",
-        ...credentials,
+        email: data.email,
+        password: data.password,
       });
 
       if (result?.error) {

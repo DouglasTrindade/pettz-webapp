@@ -25,31 +25,27 @@ export const RegisterFields = () => {
     defaultValues: {
       email: "",
       password: "",
+      fullName: "",
     },
   });
 
   const onSubmit = async (data: RegisterSchema) => {
     setIsSubmitting(true);
-    console.log(data);
 
     try {
-      await api
-        .post("/auth/register", {
-          email: data.email,
-          password: data.password,
-        })
-        .then((res) => {
-          if (res.status == 201) {
-            setTimeout(() => {
-              toast.success("Seu cadastro foi realizado com sucesso.");
-            });
-          }
-        });
-      router.push("/login");
-    } catch (error) {
-      setTimeout(() => {
-        toast.error("Não foi possível realizar o cadastro. Tente novamente.");
+      const res = await api.post("/auth/signup", {
+        fullName: data.fullName,
+        email: data.email,
+        password: data.password,
       });
+
+      if (res.status === 201) {
+        toast.success("Seu cadastro foi realizado com sucesso.");
+        router.push("/login");
+      }
+    } catch (error) {
+      console.error("Erro ao cadastrar:", error);
+      toast.error("Não foi possível realizar o cadastro. Tente novamente.");
     } finally {
       setIsSubmitting(false);
     }
@@ -59,6 +55,26 @@ export const RegisterFields = () => {
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="fullName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-primary font-semibold">
+                  Nome
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    className="w-full border-neutral-300 rounded-6 text-base leading-5"
+                    placeholder="Digite seu nome completo"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="email"
