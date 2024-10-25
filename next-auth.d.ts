@@ -14,7 +14,7 @@ declare module "next-auth" {
     } & DefaultSession["user"];
   }
 
-  interface User extends DefaultUser {
+  interface User extends DefaultUser["user"] {
     id: string;
     fullName: string;
     token?: string;
