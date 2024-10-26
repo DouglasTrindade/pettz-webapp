@@ -10,7 +10,7 @@ declare module "next-auth" {
       token?: string;
       accessToken?: string;
       refreshToken?: string;
-      role?: string;
+      roles?: string[];
     } & DefaultSession["user"];
   }
 
@@ -20,6 +20,7 @@ declare module "next-auth" {
     token?: string;
     accessToken?: string;
     refreshToken?: string;
+    roles?: string[];
   }
 }
 
@@ -30,6 +31,7 @@ declare module "next-auth/jwt" {
     fullName?: string;
     accessToken: string;
     refreshToken?: string;
+    roles?: string[];
     error?: "RefreshTokenError";
   }
 }

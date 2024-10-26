@@ -22,7 +22,6 @@ import { Button } from "@/components/ui/button";
 
 export const Header = () => {
   const { data: session, status } = useSession();
-  console.log(session);
 
   const navLinks = [
     { name: "inicio", path: "/" },
@@ -65,6 +64,9 @@ export const Header = () => {
                   <Button variant="outline" asChild>
                     <Link href="/login">
                       <User />
+                      <span className="font-semibold pe-2 ps-1">
+                        {session?.user.fullName.split(" ")[0]}
+                      </span>
                       <ArrowDown size={15} className="ms-1" />
                     </Link>
                   </Button>

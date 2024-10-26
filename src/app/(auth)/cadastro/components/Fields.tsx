@@ -17,6 +17,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
+interface CustomError extends Error {
+  status?: number;
+}
+
 export const RegisterFields = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -43,9 +47,16 @@ export const RegisterFields = () => {
         toast.success("Seu cadastro foi realizado com sucesso.");
         router.push("/login");
       }
-    } catch (error) {
-      console.error("Erro ao cadastrar:", error);
-      toast.error("Não foi possível realizar o cadastro. Tente novamente.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        const customError = error as CustomError;
+
+        if (customError.status === 409) {
+          toast.success("Esse e-mail já existe.");
+        } else {
+          toast.error("Não foi possível realizar o cadastro. Tente novamente.");
+        }
+      }
     } finally {
       setIsSubmitting(false);
     }
