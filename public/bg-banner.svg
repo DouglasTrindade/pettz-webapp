@@ -80,21 +80,22 @@
 <path d="M63.3644 362.121C66.947 363.869 72.2646 361.716 75.2426 357.313C78.2206 352.911 76.5952 347.411 74.1478 346.177C70.5948 344.386 63.9862 347.99 62.2684 350.984C59.6514 355.55 59.7818 360.374 63.3644 362.121Z" fill="white" fill-opacity="0.1"/>
 <defs>
   <linearGradient id="paint0_linear_1_3809" x1="610.355" y1="-2.99999" x2="229.922" y2="562.9" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#8B2DF7"/>
-    <stop offset="1" stop-color="#A14FFF"/>
+    <stop stop-color="#FF8D59"/> <!-- Laranja claro neon -->
+    <stop offset="1" stop-color="#FF4500"/> <!-- Laranja neon mais escuro -->
   </linearGradient>
   <linearGradient id="paint1_linear_1_3809" x1="651.571" y1="313.229" x2="528.522" y2="352.64" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#8B2DF7"/>
-    <stop offset="1" stop-color="#A14FFF"/>
+    <stop stop-color="#FF8D59"/> <!-- Laranja claro neon -->
+    <stop offset="1" stop-color="#FF4500"/> <!-- Laranja neon mais escuro -->
   </linearGradient>
   <linearGradient id="paint2_linear_1_3809" x1="490.852" y1="148.009" x2="430.291" y2="262.144" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#8B2DF7"/>
-    <stop offset="1" stop-color="#A14FFF"/>
+    <stop stop-color="#FF8D59"/> <!-- Laranja claro neon -->
+    <stop offset="1" stop-color="#FF4500"/> <!-- Laranja neon mais escuro -->
   </linearGradient>
   <linearGradient id="paint3_linear_1_3809" x1="553.98" y1="136.052" x2="267.647" y2="561.976" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#8B2DF7"/>
-    <stop offset="1" stop-color="#A14FFF"/>
+    <stop stop-color="#FF8D59"/> <!-- Laranja claro neon -->
+    <stop offset="1" stop-color="#FF4500"/> <!-- Laranja neon mais escuro -->
   </linearGradient>
 </defs>
+
 
 </svg>

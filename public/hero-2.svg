@@ -1,9 +1,10 @@
 <svg width="163" height="61" viewBox="0 0 163 61" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M153.198 34.2773C144.077 21.3982 126.435 14.7771 108.277 8.73885C90.0919 2.91358 71.3627 -2.11592 52.2328 1.03278C32.914 3.94039 12.9505 15.2111 4.86335 31.7049C-3.03484 48.4398 1.16001 70.426 7.28116 91.146C13.43 111.653 21.2884 130.866 35.64 142.475C50.2081 154.111 71.025 158.329 91.4223 157.294C112.036 156.287 132.203 150.241 144.452 137.319C156.484 124.369 160.382 104.516 162.003 85.2342C163.407 65.9239 162.563 46.9716 153.198 34.2773Z" fill="url(#paint0_linear_1_3717)"/>
-  <defs>
-    <linearGradient id="paint0_linear_1_3717" x1="-12.003" y1="145.711" x2="162.601" y2="2.31052" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#8A2BE2"/>
-      <stop offset="1" stop-color="#BA55D3"/>
-    </linearGradient>
-  </defs>
+<defs>
+  <linearGradient id="paint0_linear_1_3717" x1="-12.003" y1="145.711" x2="162.601" y2="2.31052" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#FF8D59"/> <!-- Laranja claro neon -->
+    <stop offset="1" stop-color="#FF4500"/> <!-- Laranja neon mais escuro -->
+  </linearGradient>
+</defs>
+
 </svg>

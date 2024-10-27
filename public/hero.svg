@@ -77,29 +77,30 @@
 <path d="M456.662 247.812C464.818 255.272 467.839 268.059 470.407 281.151C472.823 294.243 474.636 307.639 470.709 320.579C466.933 333.67 457.266 346.458 445.032 350.568C432.646 354.526 417.693 349.655 403.798 343.565C390.053 337.476 377.366 330.321 370.569 319.361C363.772 308.248 362.715 293.481 365.282 279.476C367.85 265.319 373.892 251.922 384.011 244.615C394.131 237.461 408.329 236.547 421.923 237.156C435.516 237.917 448.657 240.201 456.662 247.812Z" fill="url(#paint3_linear_1_3631)"/>
 <path d="M672.852 409.162C674.424 410.654 675.006 413.212 675.5 415.83C675.966 418.449 676.315 421.128 675.559 423.716C674.831 426.334 672.969 428.892 670.612 429.714C668.225 430.505 665.345 429.531 662.667 428.313C660.019 427.095 657.575 425.664 656.266 423.472C654.956 421.25 654.752 418.296 655.247 415.495C655.742 412.664 656.906 409.984 658.855 408.523C660.805 407.092 663.54 406.909 666.159 407.031C668.778 407.183 671.31 407.64 672.852 409.162Z" fill="url(#paint4_linear_1_3631)"/>
 </g>
-  <defs>
-    <linearGradient id="paint0_linear_1_3631" x1="51" y1="924" x2="881.091" y2="131.868" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A445B2"/> <!-- Roxo claro -->
-      <stop offset="1" stop-color="#8B00FF"/> <!-- Roxo escuro -->
-    </linearGradient>
-    <linearGradient id="paint1_linear_1_3631" x1="740" y1="752" x2="171.622" y2="209.593" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A445B2"/> <!-- Roxo claro -->
-      <stop offset="1" stop-color="#8B00FF"/> <!-- Roxo escuro -->
-    </linearGradient>
-    <linearGradient id="paint2_linear_1_3631" x1="243" y1="624" x2="317.887" y2="553.107" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A445B2"/> <!-- Roxo claro -->
-      <stop offset="1" stop-color="#8B00FF"/> <!-- Roxo escuro -->
-    </linearGradient>
-    <linearGradient id="paint3_linear_1_3631" x1="364" y1="352" x2="478.835" y2="243.156" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A445B2"/> <!-- Roxo claro -->
-      <stop offset="1" stop-color="#8B00FF"/> <!-- Roxo escuro -->
-    </linearGradient>
-    <linearGradient id="paint4_linear_1_3631" x1="655" y1="430" x2="677.905" y2="409.087" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A445B2"/> <!-- Roxo claro -->
-      <stop offset="1" stop-color="#8B00FF"/> <!-- Roxo escuro -->
-    </linearGradient>
-    <clipPath id="clip0_1_3631">
-      <rect width="937" height="902" fill="white"/>
-    </clipPath>
-  </defs>
+<defs>
+  <linearGradient id="paint0_linear_1_3631" x1="51" y1="924" x2="881.091" y2="131.868" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#FF8D59"/> <!-- Laranja claro neon -->
+    <stop offset="1" stop-color="#FF6B00"/> <!-- Laranja neon mais escuro -->
+  </linearGradient>
+  <linearGradient id="paint1_linear_1_3631" x1="740" y1="752" x2="171.622" y2="209.593" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#FF8D59"/> <!-- Laranja claro neon -->
+    <stop offset="1" stop-color="#FF6B00"/> <!-- Laranja neon mais escuro -->
+  </linearGradient>
+  <linearGradient id="paint2_linear_1_3631" x1="243" y1="624" x2="317.887" y2="553.107" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#FF8D59"/> <!-- Laranja claro neon -->
+    <stop offset="1" stop-color="#FF6B00"/> <!-- Laranja neon mais escuro -->
+  </linearGradient>
+  <linearGradient id="paint3_linear_1_3631" x1="364" y1="352" x2="478.835" y2="243.156" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#FF8D59"/> <!-- Laranja claro neon -->
+    <stop offset="1" stop-color="#FF6B00"/> <!-- Laranja neon mais escuro -->
+  </linearGradient>
+  <linearGradient id="paint4_linear_1_3631" x1="655" y1="430" x2="677.905" y2="409.087" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#FF8D59"/> <!-- Laranja claro neon -->
+    <stop offset="1" stop-color="#FF6B00"/> <!-- Laranja neon mais escuro -->
+  </linearGradient>
+  <clipPath id="clip0_1_3631">
+    <rect width="937" height="902" fill="white"/>
+  </clipPath>
+</defs>
+
 </svg>
