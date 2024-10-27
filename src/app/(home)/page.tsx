@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { api } from "@/services/api";
 import { useEffect, useState } from "react";
+import { useUserRolePermissions } from "@/hooks/useUserRolePermissions";
 
 const POSTCARDS = 4;
 
@@ -25,6 +26,7 @@ interface ApiResponse {
 
 const Home = () => {
   const [products, setProducts] = useState<ApiResponse>({ content: [] });
+  const { redirectTo, isAdmin } = useUserRolePermissions();
 
   useEffect(() => {
     api
@@ -37,6 +39,7 @@ const Home = () => {
       });
   }, []);
 
+  if (isAdmin) redirectTo();
   return (
     <div className="h-screen py-8">
       <div className="text-2xl font-bold text-gray-600">

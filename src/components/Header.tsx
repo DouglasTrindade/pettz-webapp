@@ -21,7 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 export const Header = () => {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
   const navLinks = [
     { name: "inicio", path: "/" },
@@ -34,7 +34,8 @@ export const Header = () => {
     <div className="py-5 px-6 mt-3 rounded-full shadow-xl bg-white">
       <div className="flex items-center justify-between">
         <div className="font-extrabold text-xl">
-          pettz<span className="text-primary">.</span>
+          4Pettz
+          <span className="text-primary">.</span>
         </div>
 
         <nav className="hidden md:block">
@@ -64,6 +65,9 @@ export const Header = () => {
                   <Button variant="outline" asChild>
                     <Link href="/login">
                       <User />
+                      <span className="font-semibold pe-2 ps-1">
+                        {session?.user.fullName.split(" ")[0]}
+                      </span>
                       <ArrowDown size={15} className="ms-1" />
                     </Link>
                   </Button>

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { MouseEventHandler, useState } from "react";
 import {
   ShoppingCart,
-  Video,
   Users,
   ChartColumnStacked,
   ArrowLeftToLine,
   ArrowRightToLine,
-  Bolt,
+  LogOut,
 } from "lucide-react";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 interface SidebarProps {
   children: React.ReactNode;
@@ -41,61 +41,68 @@ const VerticalSidebar = ({
   >
     <button
       onClick={toggleSidebar}
-      className={`absolute z-20 -right-5 top-4 bg-gray-900 text-gray-300 hover:bg-gray-700 p-2 rounded-full transform transition-transform duration-300 ease-in-out`}
+      className={`absolute z-20 -right-4 top-4 border border-gray-400 bg-orange-700 p-2 rounded transform transition-transform duration-300 ease-in-out`}
     >
-      {isOpen ? <ArrowLeftToLine /> : <ArrowRightToLine />}
+      {isOpen ? (
+        <ArrowLeftToLine size={15} color="orange" />
+      ) : (
+        <ArrowRightToLine size={15} color="orange" />
+      )}
     </button>
-    <SidebarIcon icon={<Video />} />
+    <SidebarLogo imageUrl="4pettz.png" isOpen={isOpen} />
     <NavLinks isOpen={isOpen} />
     <SidebarFooter
-      icon={<Bolt />}
+      icon={<LogOut />}
       isOpen={isOpen}
-      title={"Configurações"}
-      href={"/"}
+      title={"Sair"}
+      onClick={() => signOut({ callbackUrl: "/login" })}
     />
   </div>
 );
 
-const SidebarIcon = ({ icon }: { icon: React.ReactNode }) => (
-  <Link
-    className="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-700 hover:text-gray-300"
-    href="#"
-  >
-    {icon}
-  </Link>
+const SidebarLogo = ({
+  imageUrl,
+  isOpen,
+}: {
+  imageUrl: string;
+  isOpen: boolean;
+}) => (
+  <div className="flex justify-center bg-orange-700">
+    <img src={imageUrl} alt="Logo" className={` ${isOpen ? "w-20" : "w-16"}`} />
+  </div>
 );
 
 const SidebarFooter = ({
   icon,
   isOpen,
-  href,
+  onClick,
   title,
 }: {
   title: string;
   icon: React.ReactNode;
   isOpen: boolean;
-  href: string;
+  onClick: MouseEventHandler;
 }) => (
-  <Link
-    className="flex items-center w-full h-12 px-3 mt-auto rounded hover:bg-gray-700 hover:text-gray-300"
-    href={href}
+  <button
+    className="flex items-center w-full h-12 px-3 mt-auto rounded  text-danger hover:text-danger-dark"
+    onClick={onClick}
   >
     {icon}
     <span className={`ml-2 text-sm font-medium ${isOpen ? "block" : "hidden"}`}>
       {title}
     </span>
-  </Link>
+  </button>
 );
 
 const NavLinks = ({ isOpen }: { isOpen: boolean }) => {
   const links = [
     { title: "Produtos", icon: <ShoppingCart />, href: "#" },
     { title: "Categorias", icon: <ChartColumnStacked />, href: "#" },
-    { title: "Users", icon: <Users />, href: "#" },
+    { title: "Usuários", icon: <Users />, href: "#" },
   ];
 
   return (
-    <div className="flex flex-col items-center w-full mt-3 border-t border-gray-700">
+    <div className="flex flex-col items-center w-full border-t border-gray-700">
       {links.map((link, index) => (
         <SidebarMenu
           key={index}

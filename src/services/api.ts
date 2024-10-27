@@ -1,7 +1,7 @@
 import axios from "axios";
-import _ from "lodash";
-import { signOut, getSession } from "next-auth/react";
 import qs from "qs";
+import { signOut, getSession } from "next-auth/react";
+import _ from "lodash";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -11,37 +11,20 @@ const api = axios.create({
   },
 });
 
-api.interceptors.request.use(async (config) => {
-  try {
-    const session = await getSession();
-
-    if (session?.user.token)
-      config.headers.Authorization = `Bearer ${session.user.token}`;
-  } catch (error) {
-    console.error("Erro ao adicionar o token à requisição:", error);
+axios.interceptors.request.use(async (config) => {
+  const session = await getSession();
+  if (session) {
+    config.headers.Authorization = `Bearer ${session.accessToken}`;
   }
-
   return config;
 });
 
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    try {
-      const statusCode = _.get(error, "response.status");
-      const apiStatusCode = _.get(error, "response.data.status_code");
-      if (
-        (statusCode === 401 || apiStatusCode === 401) &&
-        window !== undefined
-      ) {
-        console.warn("Token expirado ou inválido. Realizando sign out...");
-        await signOut();
-      }
-    } catch (error) {
-      console.error("Erro no interceptor de resposta:", error);
-    }
-
-    return Promise.reject(error);
+    if (401 === _.get(error, "response.status")) {
+      return signOut();
+    } else return Promise.reject(error);
   }
 );
 

@@ -1,7 +1,14 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { api } from "@/services/api";
+import { jwtDecode } from "jwt-decode";
 
+interface DecodedToken {
+  sub: string;
+  fullName: string;
+  email: string;
+  roles: string[];
+}
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
@@ -15,52 +22,64 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const email = credentials.email as string | undefined;
         const password = credentials.password as string | undefined;
 
-        if (!email || !password) {
-          throw new Error("Por favor, forneça tanto o email quanto a senha.");
-        }
-
         try {
-          const response = await api.post("/auth/login", { email, password });
+          const response = await api.post("/auth/signin", {
+            email,
+            password,
+          });
+          console.log("Response Data:", response.data);
 
-          if (!response.data || !response.data.token) {
-            console.error("Resposta inesperada da API:", response.data);
-            throw new Error("Falha na autenticação.");
-          }
+          const { accessToken, refreshToken, fullName, idUser } = response.data;
+          const decoded = jwtDecode<DecodedToken>(accessToken);
+          console.log("Decoded Token:", decoded);
 
-          console.log("Usuário autenticado:", response.data);
-
-          return {
-            email: response.data.email,
-            id: response.data.id,
-            token: response.data.token,
+          const user = {
+            roles: decoded.roles,
+            email: decoded.sub,
+            fullName: fullName,
+            idUser: idUser,
+            token: accessToken,
+            refreshToken,
           };
+
+          return user;
         } catch (error) {
+          console.error("Erro ao autenticar:", error);
           throw new Error("Falha na autenticação. Verifique suas credenciais.");
         }
       },
     }),
   ],
+  debug: true,
   pages: {
-    signIn: "/login",
+    signIn: "/signin",
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.email = user.email;
-        token.token = user.token;
+        token.fullName = user.fullName;
+        token.accessToken = user.token;
+        token.roles = user.roles;
       }
       return token;
     },
     async session({ session, token }) {
-      session.user.id = token.id as string;
-      session.user.token = token.token as string | undefined;
+      if (session) {
+        session.user.id = token.id as string;
+        session.user.fullName = token.fullName as string;
+        session.user.token = token.accessToken as string | undefined;
+        session.user.roles = token.roles as string[];
+      }
 
       return session;
     },
     async signIn() {
       return true;
     },
+  },
+  session: {
+    strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
 });

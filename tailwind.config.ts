@@ -12,26 +12,25 @@ const config: Config = {
       center: true,
       padding: {
         DEFAULT: "1rem",
-        sm: "2rem",
-        lg: "3rem",
+        lg: "2rem",
       },
     },
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#8B2DF7",
+          DEFAULT: "#FF6B00",
           foreground: "hsl(var(--primary-foreground))",
         },
-        purple: {
-          "100": "#E8D5FD",
-          "200": "#D1ABFC",
-          "300": "#B981FA",
-          "400": "#A257F9",
-          "600": "#6F24C6",
-          "700": "#531B94",
-          "800": "#381263",
-          "900": "#1C0931",
-          DEFAULT: "#8B2DF7",
+        neonOrange: {
+          "100": "#FFD8C2",
+          "200": "#FFB38E",
+          "300": "#FF8D59",
+          "400": "#FF6B00",
+          "600": "#CC5600",
+          "700": "#993F00",
+          "800": "#662900",
+          "900": "#331400",
+          DEFAULT: "#FF6B00",
         },
         black: {
           "100": "#D1D0D1",
@@ -49,8 +48,8 @@ const config: Config = {
           dark: "#2E2D31",
         },
         backgroundImage: {
-          "purple-gradient":
-            "linear-gradient(45deg, #E8D5FD, #8B2DF7, #1C0931)",
+          "neon-orange-gradient":
+            "linear-gradient(45deg, #FFD8C2, #FF6B00, #331400)",
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
