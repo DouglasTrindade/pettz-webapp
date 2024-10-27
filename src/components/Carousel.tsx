@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { Card, CardContent } from "./ui/card";
+import { Card } from "@/components/ui/card";
 
 export const Carousel = () => {
   const slides = [
@@ -41,18 +41,15 @@ export const Carousel = () => {
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
-            <Card className="h-full">
-              <img
-                className="rounded-t-lg w-full object-cover h-[150px]"
-                src={slide.image}
-                alt={`Slide ${slide.id}`}
-              />
-              <CardContent className="p-4">
-                <div className="flex flex-col">
-                  <span className="font-bold">{slide.title}</span>
-                  <span className="text-sm text-gray-400">99 produtos</span>
-                </div>
-              </CardContent>
+            <Card className="h-full relative">
+              <div className="flex gap-5 justify-center m-2">
+                <span className="font-bold z-50">{slide.title}</span>
+                <img
+                  className="absolute top-0 left-0 h-full w-full rounded-xl"
+                  src="high-line-category.png"
+                  alt="high-line"
+                />
+              </div>
             </Card>
           </SwiperSlide>
         ))}
@@ -83,11 +80,11 @@ export const Carousel = () => {
         }
 
         .swiper-button-prev-custom {
-          left: 10px;
+          left: -10px;
         }
 
         .swiper-button-next-custom {
-          right: 10px;
+          right: -10px;
         }
       `}</style>
     </div>

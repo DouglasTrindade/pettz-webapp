@@ -16,7 +16,7 @@ export const Login = () => {
         <CardTitle className="font-bold text-3xl">
           4Pettz<span className="text-primary">.</span>
         </CardTitle>
-        <CardDescription>Siga para a pettz.</CardDescription>
+        <CardDescription>Siga para a 4Pettz.</CardDescription>
       </CardHeader>
       <CardContent>
         <LoginFields />
