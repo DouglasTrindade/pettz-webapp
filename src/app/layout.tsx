@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "sonner";
@@ -20,11 +21,6 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
-
-export const metadata: Metadata = {
-  title: "pettz.",
-  description: "pettz.",
-};
 
 export default function RootLayout({
   children,

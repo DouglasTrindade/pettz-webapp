@@ -1,14 +1,5 @@
-"use client";
-
-import { Sidebar } from "./components/Sidebar";
-import { Admin } from "./components";
-
 const AdminPage = () => {
-  return (
-    <Sidebar>
-      <Admin />
-    </Sidebar>
-  );
+  return <div className="px-8 py-5">Admin Page</div>;
 };
 
 export default AdminPage;

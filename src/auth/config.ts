@@ -27,11 +27,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email,
             password,
           });
-          console.log("Response Data:", response.data);
 
           const { accessToken, refreshToken, fullName, idUser } = response.data;
           const decoded = jwtDecode<DecodedToken>(accessToken);
-          console.log("Decoded Token:", decoded);
 
           const user = {
             roles: decoded.roles,
@@ -50,7 +48,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-  debug: true,
   pages: {
     signIn: "/signin",
   },
