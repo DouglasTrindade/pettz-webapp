@@ -8,7 +8,9 @@ import {
   TableHead,
 } from "@/components/ui/table";
 import { ProductsListItem } from "./ListItem";
-import { useRecords } from "@/hooks/useRecords";
+import { useEffect, useState } from "react";
+import { api } from "@/services/api";
+import { useSession } from "next-auth/react";
 
 interface Product {
   id: string;
@@ -19,8 +21,26 @@ interface Product {
 }
 
 export const ProductsList = () => {
-  const { records: products } = useRecords<Product>("/products/admin/getAll");
-  console.log(products);
+  const { data: session } = useSession();
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    if (!session?.user?.token) return;
+
+    try {
+      api
+        .get("/products/admin/getAll", {
+          headers: {
+            Authorization: `Bearer ${session.user.token}`,
+          },
+        })
+        .then((response) => {
+          setProducts(response.data);
+        });
+    } catch (error) {
+      console.error("Erro ao buscar produtos:", error);
+    }
+  }, [session]);
 
   const handleEdit = (product: Product) => {
     console.log(product);

@@ -29,17 +29,26 @@ export const useRecords = <T>(
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
+  const [sessionLoaded, setSessionLoaded] = useState(false);
 
   useEffect(() => {
     const fetchSession = async () => {
-      const sessionData = await getSession();
-      setSession(sessionData as Session);
+      try {
+        const sessionData = await getSession();
+        setSession(sessionData as Session);
+      } finally {
+        setSessionLoaded(true);
+      }
     };
 
-    fetchSession();
-  }, []);
+    if (!sessionLoaded) {
+      fetchSession();
+    }
+  }, [sessionLoaded]);
 
   useEffect(() => {
+    if (!sessionLoaded || !url) return;
+
     const fetchRecords = async () => {
       setIsLoading(true);
       setIsError(false);
@@ -47,7 +56,7 @@ export const useRecords = <T>(
       try {
         const headers: { [key: string]: string } = {};
 
-        if (session && session.user?.roles?.includes("Admin")) {
+        if (session?.user?.roles?.includes("Admin") && session.user.token) {
           headers.Authorization = `Bearer ${session.user.token}`;
         }
 
@@ -61,10 +70,8 @@ export const useRecords = <T>(
       }
     };
 
-    if (url) {
-      fetchRecords();
-    }
-  }, [url, params, session]);
+    fetchRecords();
+  }, [url, params, session, sessionLoaded]);
 
   return { records, isLoading, isError };
 };
