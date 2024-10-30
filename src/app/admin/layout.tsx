@@ -1,6 +1,5 @@
 "use client";
 
-import { SessionProvider } from "next-auth/react";
 import { Sidebar } from "./components/Sidebar";
 
 export default function AdminLayout({
@@ -8,9 +7,5 @@ export default function AdminLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <SessionProvider>
-      <Sidebar>{children}</Sidebar>
-    </SessionProvider>
-  );
+  return <Sidebar>{children}</Sidebar>;
 }
