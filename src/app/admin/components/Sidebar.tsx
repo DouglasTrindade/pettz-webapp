@@ -41,12 +41,12 @@ const VerticalSidebar = ({
   >
     <button
       onClick={toggleSidebar}
-      className={`absolute z-20 -right-4 top-4 border border-gray-300 p-2 rounded transform transition-transform duration-300 ease-in-out`}
+      className={`absolute z-20 -right-3 top-4 border border-gray-300 p-1 rounded transform transition-transform duration-300 ease-in-out`}
     >
       {isOpen ? (
-        <ArrowLeftToLine size={15} color="gray" />
+        <ArrowLeftToLine size={13} color="gray" />
       ) : (
-        <ArrowRightToLine size={15} color="gray" />
+        <ArrowRightToLine size={13} color="gray" />
       )}
     </button>
     <SidebarLogo imageUrl="4pettz.png" isOpen={isOpen} />
