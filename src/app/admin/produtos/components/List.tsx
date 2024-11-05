@@ -11,6 +11,7 @@ import { ProductsListItem } from "./ListItem";
 import { useEffect, useState } from "react";
 import { api } from "@/services/api";
 import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 interface Product {
   id: string;
@@ -35,7 +36,7 @@ export const ProductsList = () => {
           },
         })
         .then((response) => {
-          setProducts(response.data);
+          setProducts(response?.data?.content);
         });
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
@@ -46,32 +47,41 @@ export const ProductsList = () => {
     console.log(product);
   };
 
+  const handleNew = () => {
+    console.log("novo button");
+  };
+
   const handleDelete = (id: string) => {
     console.log(`Deletar produto com id: ${id}`);
   };
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Nome</TableHead>
-          <TableHead>Preço</TableHead>
-          <TableHead>Categoria</TableHead>
-          <TableHead>Estoque</TableHead>
-          <TableHead>Ações</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {products &&
-          products.map((product: Product) => (
-            <ProductsListItem
-              key={product.id}
-              {...product}
-              onEdit={() => handleEdit(product)}
-              onDelete={() => handleDelete(product.id)}
-            />
-          ))}
-      </TableBody>
-    </Table>
+    <>
+    <div className="flex items-end justify-end">
+    <Button size="sm" onClick={handleNew}>Novo Produto</Button>
+    </div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Nome</TableHead>
+            <TableHead>Preço</TableHead>
+            <TableHead>Categoria</TableHead>
+            <TableHead>Estoque</TableHead>
+            <TableHead className="text-end">Ações</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {products &&
+            products.map((product: Product) => (
+              <ProductsListItem
+                key={product.id}
+                {...product}
+                onEdit={() => handleEdit(product)}
+                onDelete={() => handleDelete(product.id)}
+              />
+            ))}
+        </TableBody>
+      </Table>
+    </>
   );
 };
