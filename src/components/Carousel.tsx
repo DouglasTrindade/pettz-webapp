@@ -43,7 +43,9 @@ export const Carousel = () => {
           <SwiperSlide key={slide.id}>
             <Card className="h-full relative">
               <div className="flex gap-5 justify-center m-2">
-                <span className="font-bold z-50">{slide.title}</span>
+                <span className="font-bold z-50 text-black-400">
+                  {slide.title}
+                </span>
                 <img
                   className="absolute top-0 left-0 h-full w-full rounded-xl"
                   src="high-line-category.png"

@@ -37,16 +37,16 @@ const VerticalSidebar = ({
   <div
     className={`flex flex-col ${
       isOpen ? "w-60" : "w-16"
-    } h-full text-gray-400 bg-gray-900 transition-width duration-300 ease-in-out relative`}
+    } h-full border border-gray-300 transition-width duration-300 ease-in-out relative`}
   >
     <button
       onClick={toggleSidebar}
-      className={`absolute z-20 -right-4 top-4 border border-gray-400 bg-orange-700 p-2 rounded transform transition-transform duration-300 ease-in-out`}
+      className={`absolute z-20 -right-3 top-4 border border-gray-300 p-1 rounded transform transition-transform duration-300 ease-in-out`}
     >
       {isOpen ? (
-        <ArrowLeftToLine size={15} color="orange" />
+        <ArrowLeftToLine size={13} color="gray" />
       ) : (
-        <ArrowRightToLine size={15} color="orange" />
+        <ArrowRightToLine size={13} color="gray" />
       )}
     </button>
     <SidebarLogo imageUrl="4pettz.png" isOpen={isOpen} />
@@ -67,8 +67,21 @@ const SidebarLogo = ({
   imageUrl: string;
   isOpen: boolean;
 }) => (
-  <div className="flex justify-center bg-orange-700">
-    <img src={imageUrl} alt="Logo" className={` ${isOpen ? "w-20" : "w-16"}`} />
+  <div className="flex justify-center">
+    {imageUrl === null ? (
+      <img
+        src={imageUrl}
+        alt="Logo"
+        className={` ${isOpen ? "w-20" : "w-16"}`}
+      />
+    ) : (
+      <Link href="/admin">
+        <div className="font-extrabold text-xl py-2 text-gray-600">
+          {isOpen ? "4Pettz" : "4P"}
+          <span className="text-neonOrange">.</span>
+        </div>
+      </Link>
+    )}
   </div>
 );
 
@@ -96,13 +109,17 @@ const SidebarFooter = ({
 
 const NavLinks = ({ isOpen }: { isOpen: boolean }) => {
   const links = [
-    { title: "Produtos", icon: <ShoppingCart />, href: "#" },
-    { title: "Categorias", icon: <ChartColumnStacked />, href: "#" },
-    { title: "Usuários", icon: <Users />, href: "#" },
+    { title: "Produtos", icon: <ShoppingCart />, href: "/admin/produtos" },
+    {
+      title: "Categorias",
+      icon: <ChartColumnStacked />,
+      href: "/admin/categorias",
+    },
+    { title: "Usuários", icon: <Users />, href: "/admin/usuarios" },
   ];
 
   return (
-    <div className="flex flex-col items-center w-full border-t border-gray-700">
+    <div className="flex flex-col items-center w-full">
       {links.map((link, index) => (
         <SidebarMenu
           key={index}
@@ -128,11 +145,13 @@ const SidebarMenu = ({
   href: string;
 }) => (
   <Link
-    className="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300"
+    className="flex items-center w-full h-12 px-3 mt-2 rounded text-gray-600 hover:text-neonOrange"
     href={href}
   >
     {icon}
-    <span className={`ml-2 text-sm font-medium ${isOpen ? "block" : "hidden"}`}>
+    <span
+      className={`ml-2 text-sm font-semibold ${isOpen ? "block" : "hidden"}`}
+    >
       {title}
     </span>
   </Link>

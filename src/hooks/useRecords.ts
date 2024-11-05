@@ -1,106 +1,77 @@
-/* eslint-disable prefer-const */
-import _ from "lodash";
-import qs from "qs";
+import { useEffect, useState } from "react";
+import { api } from "@/services/api";
+import { getSession } from "next-auth/react";
 
-import {
-  useQuery,
-  UseQueryOptions,
-  UseQueryResult,
-} from "@tanstack/react-query";
-
-import { getQuery } from "../utils/getQuery";
-
-export const DEFAULT_OPTIONS: UseQueryOptions = {
-  refetchInterval: 60000,
-  refetchIntervalInBackground: true,
-  retry: false,
-  retryDelay: (attempt) =>
-    Math.min(attempt > 1 ? 2 ** attempt * 1000 : 1000, 30 * 1000),
-  queryKey: [],
-};
-
-interface UseRecordsProps<TParams = object> {
-  r: string;
-  resource?: string;
-  options?: UseQueryOptions;
-  params?: TParams;
-  queryParams?: TParams;
-  shouldFetch?: boolean;
+interface User {
+  email: string | null | undefined;
+  id: string | null | undefined;
+  fullName: string | null | undefined;
+  roles: string[] | null | undefined;
+  token: string | null | undefined;
 }
 
-interface UseRecordsReturn<TData = [], TPagination = object> {
-  records: TData;
-  pagination?: TPagination;
+interface Session {
+  expires: string | null | undefined;
+  user: User | null | undefined;
+}
+
+interface UseRecordsResponse<T> {
+  records: T[];
   isLoading: boolean;
   isError: boolean;
-  isSuccess: boolean;
-  isEmpty: boolean;
-  loadWrapperConfig: {
-    isLoading: boolean;
-    isError: boolean;
-    isSuccess: boolean;
-    isEmpty: boolean;
-  };
-  refetch: () => void;
 }
 
-export const useRecords = (props: UseRecordsProps): UseRecordsReturn => {
-  /**
-   * @WARNING If props is not an object, throw an error
-   * @WARNING If resource key given on props, it should be a r
-   * @WARNING If queryParams key given on props, it should be a params
-   */
-  if (!_.isObject(props))
-    throw new Error(
-      "Consider use useRecords with one named props arg instead of using many sequential args"
-    );
-  if (props.resource)
-    throw new Error(
-      'Consider using "r" instead of "resource" as key on useRecord props'
-    );
-  if (props.queryParams)
-    throw new Error(
-      'Consider using "params" instead of "query" as key on useRecord props'
-    );
+export const useRecords = <T>(
+  url: string,
+  params = {}
+): UseRecordsResponse<T> => {
+  const [records, setRecords] = useState<T[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [session, setSession] = useState<Session | null>(null);
+  const [sessionLoaded, setSessionLoaded] = useState(false);
 
-  let {
-    r,
-    shouldFetch = true,
-    options = DEFAULT_OPTIONS,
-    params = {},
-  } = props as UseRecordsProps;
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        const sessionData = await getSession();
+        setSession(sessionData as Session);
+      } finally {
+        setSessionLoaded(true);
+      }
+    };
 
-  let path = r;
-  path += `${path.includes("?") ? "&" : "?"}${qs.stringify(getQuery(params), {
-    arrayFormat: "brackets",
-  })}`;
-  shouldFetch = typeof shouldFetch == "undefined" || shouldFetch;
-  const readyToFetch = !!shouldFetch && !!r && !r.includes("undefined");
+    if (!sessionLoaded) {
+      fetchSession();
+    }
+  }, [sessionLoaded]);
 
-  const { isLoading, isError, isSuccess, data, refetch, ...rest } = useQuery({
-    queryKey: [path],
-    enabled: !!readyToFetch,
-    ...options,
-  }) as UseQueryResult<UseRecordsReturn>;
+  useEffect(() => {
+    if (!sessionLoaded || !url) return;
 
-  const records = data?.records || [];
-  const pagination = data?.pagination;
-  const isEmpty = isSuccess && data && records && records.length == 0;
-  const supInfo = _.omit(data, ["records", "pagination"]);
-  const loadWrapperConfig = { isLoading, isError, isSuccess, isEmpty };
+    const fetchRecords = async () => {
+      setIsLoading(true);
+      setIsError(false);
 
-  return {
-    records,
-    ...supInfo,
-    ...rest,
-    pagination,
+      try {
+        const headers: { [key: string]: string } = {};
 
-    isLoading,
-    isError,
-    isSuccess,
-    isEmpty,
-    loadWrapperConfig,
+        if (session?.user?.roles?.includes("Admin") && session.user.token) {
+          headers.Authorization = `Bearer ${session.user.token}`;
+        }
 
-    refetch,
-  };
+        const response = await api.get(url, { params, headers });
+        setRecords(response.data.records);
+      } catch (error) {
+        setIsError(true);
+        console.error("Erro ao buscar registros:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRecords();
+  }, [url, params, session, sessionLoaded]);
+
+  return { records, isLoading, isError };
 };
