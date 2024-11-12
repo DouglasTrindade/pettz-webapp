@@ -2,7 +2,11 @@ import { Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 
 export const Footer = () => {
   const navLinks = {
-    company: [{ name: "Sobre nós" }, { name: "Blog" }, { name: "Carreira" }],
+    company: [
+      { name: "Sobre nós" },
+      { name: "Blog" },
+      { name: "Carreira" }
+    ],
     usefulLinks: [
       { name: "Novos produtos" },
       { name: "Produtos mais vendidos" },
@@ -21,7 +25,7 @@ export const Footer = () => {
     <footer className="grid grid-cols-1 md:grid-cols-4 gap-8 py-10">
       <div className="flex flex-col gap-3">
         <span className="font-extrabold text-lg">
-          pettz<span className="text-primary">.</span>
+          4pettz<span className="text-primary">.</span>
         </span>
         <p className="text-gray-600 font-medium">
           Sed viverra eget fames sit varius. Pellentesque mattis libero viverra
@@ -70,7 +74,7 @@ export const Footer = () => {
           </a>
         ))}
       </div>
-      <p className="text-gray-600 font-medium"> © Copyright pettz. 2024.</p>
+      <p className="text-gray-600 font-medium"> © Copyright 4pettz. 2024.</p>
     </footer>
   );
 };
