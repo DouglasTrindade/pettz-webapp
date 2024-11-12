@@ -20,13 +20,21 @@ interface ProductProps {
   price: number;
 }
 
+interface EmbeddedProductResponse {
+  productResponseList: ProductProps[];
+}
+
 interface ApiResponse {
+  _embedded: EmbeddedProductResponse;
   content: ProductProps[];
 }
 
 const Home = () => {
-  const [products, setProducts] = useState<ApiResponse>({ content: [] });
   const { redirectTo, isAdmin } = useUserRolePermissions();
+  const [products, setProducts] = useState<ApiResponse>({
+    _embedded: { productResponseList: [] },
+    content: [],
+  });
 
   useEffect(() => {
     api
@@ -40,11 +48,10 @@ const Home = () => {
   }, []);
 
   if (isAdmin) redirectTo();
+
   return (
     <div className="h-screen py-8">
-      <div className="text-2xl font-bold text-gray-600">
-        Navegue por categoria
-      </div>
+      <div className="text-2xl font-bold text-gray-600">Navegue por categoria</div>
       <div className="mt-8">
         <Carousel />
       </div>
@@ -52,7 +59,7 @@ const Home = () => {
         Produtos mais vendidos
       </div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-        {products.content.map((product, index) => (
+        {products?._embedded?.productResponseList.map((product, index) => (
           <ProductItem
             key={index}
             title={product.name}

@@ -12,9 +12,11 @@ import { useEffect, useState } from "react";
 import { api } from "@/services/api";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import Link from "next/link";
 
 interface Product {
-  id: string;
+  idProduct: string;
   name: string;
   price: number;
   category: string;
@@ -30,13 +32,13 @@ export const ProductsList = () => {
 
     try {
       api
-        .get("/products/admin/getAll", {
+        .get("/products/admin", {
           headers: {
             Authorization: `Bearer ${session.user.token}`,
           },
         })
         .then((response) => {
-          setProducts(response?.data?.content);
+          setProducts(response?.data?._embedded?.productWithIdResponseList);
         });
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
@@ -47,19 +49,29 @@ export const ProductsList = () => {
     console.log(product);
   };
 
-  const handleNew = () => {
-    console.log("novo button");
-  };
-
-  const handleDelete = (id: string) => {
-    console.log(`Deletar produto com id: ${id}`);
+  const handleDelete = async (idProduct: string) => {
+    try {
+      await api.delete(`/products/admin/${idProduct}`, {
+        headers: {
+          Authorization: `Bearer ${session?.user?.token}`,
+        },
+      });
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product.idProduct !== idProduct)
+      );
+      toast.success("Produto deletado com sucesso!");
+    } catch (error) {
+      toast.error("Ops... Ocorreu um erro ao deletar esse produto.");
+    }
   };
 
   return (
     <>
-    <div className="flex items-end justify-end">
-    <Button size="sm" onClick={handleNew}>Novo Produto</Button>
-    </div>
+      <div className="flex items-end justify-end">
+        <Button size="sm" asChild>
+          <Link href="/">Novo Produto</Link>
+        </Button>
+      </div>
       <Table>
         <TableHeader>
           <TableRow>
@@ -74,10 +86,10 @@ export const ProductsList = () => {
           {products &&
             products.map((product: Product) => (
               <ProductsListItem
-                key={product.id}
+                key={product.idProduct}
                 {...product}
                 onEdit={() => handleEdit(product)}
-                onDelete={() => handleDelete(product.id)}
+                onDelete={() => handleDelete(product.idProduct)}
               />
             ))}
         </TableBody>
