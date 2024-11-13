@@ -19,8 +19,7 @@ interface Product {
   idProduct: string;
   name: string;
   price: number;
-  category: string;
-  stock: number;
+  code: string;
 }
 
 export const ProductsList = () => {
@@ -75,10 +74,9 @@ export const ProductsList = () => {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead>Código</TableHead>
             <TableHead>Nome</TableHead>
             <TableHead>Preço</TableHead>
-            <TableHead>Categoria</TableHead>
-            <TableHead>Estoque</TableHead>
             <TableHead className="text-end">Ações</TableHead>
           </TableRow>
         </TableHeader>

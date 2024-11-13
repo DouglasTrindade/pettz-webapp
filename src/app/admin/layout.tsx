@@ -7,5 +7,7 @@ export default function AdminLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <Sidebar>{children}</Sidebar>;
+  return <Sidebar>
+    <div className="px-8 py-5">{children}</div>
+  </Sidebar>;
 }
